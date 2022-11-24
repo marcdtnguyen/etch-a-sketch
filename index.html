@@ -11,6 +11,23 @@
 </head>
 
 <body>
+    <h1>Etch A Sketch</h1>
+    <section class="tools">
+        <!-- enter grid size -->
+        <!-- max 100 -->
+        <input type="range" id="size" max="100" min="2" value="2">
+        <label for="size"></label>
+        <!-- black&white -->
+        <input type="radio" id="black" name="ink" value="black" checked>
+        <label for="black">Black</label>
+        <!-- rainbow -->
+        <input type="radio" id="random" name="ink" value="random">
+        <label for="rainbow">Random</label>
+        <!-- darken by 10% -->
+        <input type="radio" id="darken" name="ink" value="darken">
+        <label for="darken">Darken</label>
+    </section>
+    <section class="container"></section>
 </body>
 
 </html>
