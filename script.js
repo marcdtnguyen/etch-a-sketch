@@ -19,7 +19,8 @@ function createGrid(size) {
     for (let i = 0; i < size * size; i++) {
         const square = document.createElement('div');
         square.style.cssText =
-            `width: ${100 / size}%; height: ${100 / size}%; border: black solid 0.5px;`
+            `width: ${100 / size}%; height: ${100 / size}%; border: black solid 0.5px;`;
+        square.addEventListener('mouseover', setColor)
         board.appendChild(square);
     }
 }
@@ -30,4 +31,8 @@ function createBoard() {
         'width: 100%; height: 100%; display: flex; flex-wrap: wrap; border: black solid 0.5px;'
     container.appendChild(board);
     return board;
+}
+
+function setColor(e){
+        e.target.style.backgroundColor = 'black';
 }
