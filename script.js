@@ -6,7 +6,9 @@ createGrid(range.value);
 
 range.addEventListener('input', onInputChange);
 
-function onInputChange(e) {2
+const inks = Array.from(document.querySelectorAll('input[name="ink"]'));
+
+function onInputChange(e) {
     const size = e.target.value;
     label.innerText = `${size} x ${size}`;
     container.removeChild(container.firstChild)
@@ -20,7 +22,7 @@ function createGrid(size) {
         const square = document.createElement('div');
         square.style.cssText =
             `width: ${100 / size}%; height: ${100 / size}%; border: black solid 0.5px;`;
-        square.addEventListener('mouseover', setColor)
+        square.addEventListener('mouseover', paint)
         board.appendChild(square);
     }
 }
@@ -33,6 +35,41 @@ function createBoard() {
     return board;
 }
 
-function setColor(e){
-        e.target.style.backgroundColor = 'black';
+function paint(e) {
+    const ink = getInk().value;
+    switch (ink) {
+        case 'black':
+            e.target.style.backgroundColor = ink;
+            break;
+        case 'random':
+            e.target.style.backgroundColor = getRandColor();
+            break;
+        case 'darken':
+            if (e.target.style.backgroundColor == 'black') break;
+            e.target.style.backgroundColor = getDarkenColor(e);
+            break;
+    }
 }
+
+function getInk() {
+    return inks.find(ink => ink.checked);
+}
+
+function getRandColor() {
+    return `rgb(${getRandNum(255)}, ${getRandNum(255)}, ${getRandNum(255)})`;
+}
+
+function getRandNum(lim) {
+    return Math.floor(Math.random() * (lim + 1))
+}
+
+function getDarkenColor(e) {
+    const DARKEN_BY = 255 / 10;
+    const base = e.target.style.backgroundColor || 'rgb(255, 255, 255)';
+    let rgbValues = base.replace('rgb(', '').replace(')', '').split(', ');
+    const darkrgb = rgbValues.map(v => {
+        if (v < DARKEN_BY) return 0;
+        return v - DARKEN_BY;
+    })
+    return `rgb(${darkrgb})`
+}   
